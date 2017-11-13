@@ -7,10 +7,15 @@
     pkg: ca-certificates
     state: present
 
+- name: PostgreSQL | Retrieve the PostgreSQL repository's apt-key"
+  copy:
+    src: "ACCC4CF8.asc"
+    dest: "/tmp/pgsql-{{ postgresql_apt_key_id }}.asc"
+  when: postgresql_apt_key_url and postgresql_apt_key_id
+
 - name: PostgreSQL | Add PostgreSQL repository apt-key
   apt_key:
-    id: "{{ postgresql_apt_key_id }}"
-    url: "{{ postgresql_apt_key_url }}"
+    file: "/tmp/pgsql-{{ postgresql_apt_key_id }}.asc"
     state: present
   when: postgresql_apt_key_url and postgresql_apt_key_id
 
