@@ -6,10 +6,13 @@
     state: present
   with_items: ["python-psycopg2", "python-pycurl"]
 
+- name: PostgreSQL | Retrieve the PostgreSQL repository's apt-key"
+  command: curl -o /tmp/postresql-ACCC4CF8.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
+  when: postgresql_from_pg_repo
+
 - name: PostgreSQL | Add PostgreSQL repository apt-key
   apt_key:
-    id: ACCC4CF8
-    url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+    file: /tmp/postresql-ACCC4CF8.asc
     state: present
   when: postgresql_from_pg_repo
 
