@@ -112,8 +112,14 @@ postgresql_ssl_ciphers:
 postgresql_ssl_prefer_server_ciphers: on
 postgresql_ssl_ecdh_curve: 'prime256v1'
 postgresql_ssl_renegotiation_limit: 512MB # amount of data between renegotiations
+# Required when postgresql_ssl is on
+#postgresql_ssl_cert_src_path:
 postgresql_ssl_cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem  # (>= 9.2)
+# Required when postgresql_ssl is on
+#postgresql_ssl_key_src_path:
 postgresql_ssl_key_file: /etc/ssl/private/ssl-cert-snakeoil.key # (>= 9.2)
+# Required when postgresql_ssl is on
+#postgresql_ssl_ca_src_path:
 postgresql_ssl_ca_file: ''                                      # (>= 9.2)
 postgresql_ssl_crl_file: ''                                     # (>= 9.2)
 postgresql_password_encryption: on
