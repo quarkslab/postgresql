@@ -143,6 +143,13 @@
   when: postgresql_ssl
   register: postgresql_ssl_ca_changed
 
+- name: PostgreSQL | Copy server SSL CRL
+  become: true
+  become_user: "{{postgresql_service_user}}"
+  copy: src={{postgresql_ssl_crl_src_path}} dest={{postgresql_ssl_crl_file}} owner={{postgresql_service_user}} group={{postgresql_service_group}} mode=0640
+  when: postgresql_ssl
+  register: postgresql_ssl_crl_changed
+
 - name: PostgreSQL | Create folder for additional configuration files
   file:
     name: "{{postgresql_conf_directory}}/conf.d"
@@ -183,4 +190,4 @@
   service:
     name: "{{ postgresql_service_name }}"
     state: restarted
-  when: postgresql_configuration_pt1.changed or postgresql_configuration_pt2.changed or postgresql_configuration_pt3.changed or postgresql_systemd_custom_conf.changed or postgresql_ssl_key_changed or postgresql_ssl_cert_changed or postgresql_ssl_ca_changed
+  when: postgresql_configuration_pt1.changed or postgresql_configuration_pt2.changed or postgresql_configuration_pt3.changed or postgresql_systemd_custom_conf.changed or postgresql_ssl_key_changed or postgresql_ssl_cert_changed or postgresql_ssl_ca_changed or postgresql_ssl_crl_changed
