@@ -41,15 +41,13 @@
 
 - name: PostgreSQL | Install PostgreSQL
   apt:
-    name: "{{item}}"
+    name: ["postgresql-{{postgresql_version}}",
+           "postgresql-client-{{postgresql_version}}",
+           "postgresql-contrib-{{postgresql_version}}"]
     state: present
     update_cache: yes
     cache_valid_time: "{{apt_cache_valid_time | default (3600)}}"
   environment: "{{postgresql_env}}"
-  with_items:
-    - "postgresql-{{postgresql_version}}"
-    - "postgresql-client-{{postgresql_version}}"
-    - "postgresql-contrib-{{postgresql_version}}"
 
 - name: PostgreSQL | PGTune
   apt:
